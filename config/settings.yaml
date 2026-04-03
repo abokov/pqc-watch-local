@@ -1,0 +1,22 @@
+network:
+  interface: "any"
+  port: 443
+  pqc_algorithms:
+    - "Kyber768"
+    - "ML-KEM-768"
+    - "Dilithium"
+    - "ML-DSA"
+
+app_analysis:
+  scan_paths:
+    - "/usr/bin"
+    - "/usr/local/bin"
+    - "/Applications"
+  target_libraries:
+    - "libssl"
+    - "libcrypto"
+    - "libnss"
+
+logging:
+  level: "INFO"
+  file_path: "pqc_watch.log"
