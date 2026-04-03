@@ -28,31 +28,44 @@ The agent operates as a modular Python daemon with two primary engines:
 
 ### Prerequisites
 * **Python 3.9+**
-* **TShark** (Wireshark's CLI tool) must be installed on the host system.
+* **TShark / Wireshark:** The `pyshark` library requires the underlying TShark engine.
+  * **macOS:** `brew install wireshark`
+  * **Linux:** `sudo apt install tshark`
 
 ### Quick Start
+
 1. **Clone the repo:**
-   ```bash
+
+```bash
    git clone [https://github.com/](https://github.com/)<your-username>/pqc-watch-local.git
    cd pqc-watch-local
-   ```
-2. Run the setup script:
-This script creates a virtual environment and checks for system dependencies.
+```
+
+2. **Run the setup script:**
+Create virtual environment (venv) and install dependencies.
 
 ```Bash
 chmod +x scripts/*.sh
 ./scripts/setup_env.sh
 ```
+Then activate virtual environment
 
-3. Launch the Agent:
-
-Mac
 ```Bash
-./scripts/run_agent_mac.sh
+source venv/bin/activate
+``
+
+3. **Launch the Agent:**
+
+Note: Traffic analysis requires elevated privileges aka `sudo`  to bind to the network interfaces.
+
+On Mac
+```Bash
+sudo ./scripts/run_agent_mac.sh
 ```
-linux/cloud vms
+
+On Linux / your cloud virtual machine
 ```Bash
-./scripts/run_agent_linux.sh
+sudo ./scripts/run_agent_linux.sh
 ```
 
 Sample of output 
