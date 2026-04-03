@@ -55,6 +55,38 @@ linux/cloud vms
 ./scripts/run_agent_linux.sh
 ```
 
+sample of output 
+```Plain
+============================================================
+PQC WATCH: SYSTEM SCAN REPORT (LEGACY CRYPTO DETECTED)
+============================================================
+
+[PID 120] Process: accessoryupdaterd
+Patyh: /System/Library/PrivateFrameworks/MobileAccessoryUpdater.framework/Support/accessoryupdaterd
+--------------------
+  - libcrypto: /usr/lib/libcrypto.35.dylib [PQC-READY]
+
+[PID 1443] Process: ssh-agent
+Path: /usr/bin/ssh-agent
+--------------------
+  - libcrypto: /usr/lib/libcrypto.46.dylib [PQC-READY]
+
+[PID 3135] Process: node
+Path: /usr/local/Cellar/node/25.6.1/bin/node
+--------------------
+  - libcrypto: /usr/local/opt/openssl@3/lib/libcrypto.3.dylib [PQC-READY]
+  - libssl: /usr/local/opt/openssl@3/lib/libssl.3.dylib [PQC-READY]
+
+[PID 3151] Process: node
+Path: /usr/local/Cellar/node/25.6.1/bin/node
+--------------------
+  - libcrypto: /usr/local/opt/openssl@3/lib/libcrypto.3.dylib [PQC-READY]
+  - libssl: /usr/local/opt/openssl@3/lib/libssl.3.dylib [PQC-READY]
+
+============================================================
+```
+
+
 ## ⚠️ The Critical Gap
 
 While **pqc-watch-local** provides essential endpoint visibility, it is important to note:
