@@ -1,0 +1,72 @@
+# pqc-watch-local 🛡️⚛️
+
+**pqc-watch-local** is a lightweight, cross-platform security agent designed to monitor Post-Quantum Cryptography (PQC) readiness on endpoints and cloud VMs. It focuses on "Pillar 1" of the PQC migration: **Cryptographic Inventory.**
+
+With Google accelerating its PQC migration deadline to 2029 and NIST finalizing FIPS 203 (ML-KEM), visibility into legacy crypto usage is no longer optional—it's a compliance necessity.
+
+## 🚀 Overview
+
+This PoC addresses the "Harvest Now, Decrypt Later" (HNDL) threat by providing real-time visibility into:
+1.  **Network Traffic:** Identifying whether TLS 1.3 handshakes are utilizing modern **ML-KEM (Kyber)** or falling back to quantum-vulnerable **RSA/ECC**.
+2.  **System Binaries:** Scanning running processes for dynamically linked legacy libraries (OpenSSL < 3.0, older NSS) that lack native PQC support.
+
+## 🏗️ Architecture: Pillar 1
+
+The agent operates as a modular Python daemon with two primary engines:
+
+### 1. Traffic Analysis Engine
+* **Technology:** Pyshark / Scapy wrapper.
+* **Function:** Monitors port 443 for `Client Hello` and `Server Hello` packets.
+* **Logic:** Extracts `supported_groups` and `ciphersuites` to flag non-hybrid or non-PQC exchanges.
+
+### 2. App Analysis Engine
+* **Technology:** `psutil` + `ldd` (Linux) / `otool` (macOS).
+* **Function:** Iterates through active PIDs to map memory-linked `.so` and `.dylib` files.
+* **Logic:** Flags processes using versions of `libcrypto` or `libssl` that haven't been patched for the post-quantum era.
+
+## 🛠️ Installation & Setup
+
+### Prerequisites
+* **Python 3.9+**
+* **TShark** (Wireshark's CLI tool) must be installed on the host system.
+
+### Quick Start
+1. **Clone the repo:**
+   ```bash
+   git clone [https://github.com/](https://github.com/)<your-username>/pqc-watch-local.git
+   cd pqc-watch-local
+   ```
+2. Run the setup script:
+This script creates a virtual environment and checks for system dependencies.
+
+```Bash
+chmod +x scripts/*.sh
+./scripts/setup_env.sh
+```
+
+3. Launch the Agent:
+
+Mac
+```Bash
+./scripts/run_agent_mac.sh
+```
+linux/cloud vms
+```Bash
+./scripts/run_agent_linux.sh
+```
+
+## ⚠️ The Critical Gap
+
+While **pqc-watch-local** provides essential endpoint visibility, it is important to note:
+* **TLS 1.3 Encryption:** Since server certificates are encrypted in TLS 1.3, this agent identifies the **Key Exchange** (ML-KEM vs RSA), but it cannot verify the **Certificate Signature Algorithm** without an enterprise MITM proxy. 
+* **Static vs. Dynamic:** This version focuses on *running* processes. A full inventory should complement this with static filesystem scans.
+
+## 📈 Roadmap
+- [ ] Windows support via ETW (Event Tracing for Windows).
+- [ ] Integration with centralized SIEM/Splunk via JSON logging.
+- [ ] Hybrid-mode detection for IKEv2/IPsec.
+- [ ] Automated alerting for legacy TLS 1.2 fallback.
+
+---
+*Created as a Proof of Concept for Post-Quantum visibility in the 2026 threat landscape.*
+
