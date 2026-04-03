@@ -55,7 +55,7 @@ linux/cloud vms
 ./scripts/run_agent_linux.sh
 ```
 
-sample of output 
+Sample of output 
 ```Plain
 ============================================================
 PQC WATCH: SYSTEM SCAN REPORT (LEGACY CRYPTO DETECTED)
@@ -87,13 +87,13 @@ Path: /usr/local/Cellar/node/25.6.1/bin/node
 ```
 
 
-## ⚠️ The Critical Gap
+## ⚠️Todos 
 
-While **pqc-watch-local** provides essential endpoint visibility, it is important to note:
+While **pqc-watch-local** is PoC, whenever it provides essential endpoint visibility, it is important to note:
 * **TLS 1.3 Encryption:** Since server certificates are encrypted in TLS 1.3, this agent identifies the **Key Exchange** (ML-KEM vs RSA), but it cannot verify the **Certificate Signature Algorithm** without an enterprise MITM proxy. 
 * **Static vs. Dynamic:** This version focuses on *running* processes. A full inventory should complement this with static filesystem scans.
 
-## 📈 Roadmap
+## 📈 Roadmap 
 - [ ] Windows support via ETW (Event Tracing for Windows).
 - [ ] Integration with centralized SIEM/Splunk via JSON logging.
 - [ ] Hybrid-mode detection for IKEv2/IPsec.
